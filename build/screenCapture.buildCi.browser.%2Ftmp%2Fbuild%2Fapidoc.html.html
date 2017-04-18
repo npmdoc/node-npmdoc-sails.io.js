@@ -1,0 +1,294 @@
+<html><head></head><body><div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a href="https://github.com/balderdashy/sails.io.js">sails.io.js (v1.1.10)</a>
+</h1>
+<h4>Javascript SDK for communicating w/ a Sails server via WebSockets/socket.io.</h4>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.sails.io.js">module sails.io.js</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.sails.io.js.js">
+            function <span class="apidocSignatureSpan">sails.io.</span>js
+            <span class="apidocSignatureSpan">(_providedSocketIO)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.sails.io.js.io.js.toString">
+            function <span class="apidocSignatureSpan">sails.io.js.</span>io.js.toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.sails.io.js.toString">
+            function <span class="apidocSignatureSpan">sails.io.js.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.sails.io.js.toString">module sails.io.js.toString</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.sails.io.js.toString.toString">
+            function <span class="apidocSignatureSpan">sails.io.js.</span>toString
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.sails.io.js" id="apidoc.module.sails.io.js">module sails.io.js</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.sails.io.js.js" id="apidoc.element.sails.io.js.js">
+        function <span class="apidocSignatureSpan">sails.io.</span>js
+        <span class="apidocSignatureSpan">(_providedSocketIO)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function SailsIOClient(_providedSocketIO) {
+
+  // First, determine which `io` we're augmenting.
+  //
+  // Prefer the passed-in `io` instance, but fall back to the
+  // global one if we've got it.
+  var io;
+  if (_providedSocketIO) {
+    io = _providedSocketIO;
+  }
+  else {
+    io = _existingGlobalSocketIO;
+  }
+  // (note that for readability, we deliberately do not short circuit or use the tertiary operator above)
+
+
+  // If a socket.io client (`io`) is not available, none of this will work.
+  if (!io) {
+    // If node:
+    if (SDK_INFO.platform === 'node') {
+      throw new Error('No socket.io client available.  When requiring `sails.io.js` from Node.js, a socket.io client (`io`) must
+ be passed in; e.g.:\n```\nvar io = require(\'sails.io.js\')( require(\'socket.io-client\') )\n```\n(see https://github.com/balderdashy/sails.io.js/tree/master/test for more examples)');
+    }
+    // Otherwise, this is a web browser:
+    else {
+      throw new Error('The Sails socket SDK depends on the socket.io client, but the socket.io global (`io`) was not available when
+ `sails.io.js` loaded.  Normally, the socket.io client code is bundled with sails.io.js, so something is a little off.  Please check
+ to be sure this version of `sails.io.js` has the minified Socket.io client at the top of the file.');
+    }
+  }
+
+  // If the chosen socket.io client (`io`) has ALREADY BEEN AUGMENTED by this SDK,
+  // (i.e. if it already has a `.sails` property) then throw an error.
+  if (io.sails) {
+    // If node:
+    if (SDK_INFO.platform === 'node') {
+      throw new Error('The provided socket.io client (`io`) has already been augmented into a Sails socket SDK instance (it has `
+io.sails`).');
+    }
+    // Otherwise, this is a web browser:
+    else {
+      throw new Error('The socket.io client (`io`) has already been augmented into a Sails socket SDK instance.  Usually, this means
+ you are bringing `sails.io.js` onto the page more than once.');
+    }
+  }
+
+
+<span class="apidocCodeCommentSpan">  /**
+   * A little logger for this library to use internally.
+   * Basically just a wrapper around `console.log` with
+   * support for feature-detection.
+   *
+   * @api private
+   * @factory
+   */
+</span>  function LoggerFactory(options) {
+    options = options || {
+      prefix: true
+    };
+
+    // If `console.log` is not accessible, `log` is a noop.
+    if (
+      typeof console !== 'object' ||
+      typeof console.log !== 'function' ||
+      typeof console.log.bind !== 'function'
+    ) {
+      return function noop() {};
+    }
+
+    return function log() {
+      var args = Array.prototype.slice.call(arguments);
+
+      // All logs are disabled when `io.sails.environment = 'production'`.
+      if (io.sails.environment === 'production') return;
+
+      // Add prefix to log messages (unless disabled)
+      var PREFIX = '';
+      if (options.prefix) {
+        args.unshift(PREFIX);
+      }
+
+      // Call wrapped logger
+      console.log
+        .bind(console)
+        .apply(this, args);
+    };
+  }//&lt;/LoggerFactory&gt;
+
+  // Create a private logger instance
+  var consolog = LoggerFactory();
+  consolog.noPrefix = LoggerFactory({
+    prefix: false
+  });
+
+
+
+  /**
+   * What is the `requestQueue`?
+   *
+   * The request queue is used to simplify app-level connection logic--
+   * i.e. so you don't have to wait for the socket to be connected
+   * to start trying to  synchronize data.
+   *
+   * @api private
+   * @param  {SailsSocket}  socket
+   */
+
+  function runRequestQueue (socket) {
+    var queue = socket.requestQueue;
+
+    if (!queue) return;
+    for (var i in queue) {
+
+      // Double-check that `queue[i]` will not
+      // inadvertently discover extra properties attached to the Object
+      // and/or Array prototype by other libraries/frameworks/tools.
+      // (e.g. Ember does this. See https://github.com/balderdashy/sails.io.js/pull/5)
+      var isSafeToDereference = ({}).hasOwnProperty.call(queue, i);
+      if (isSafeToDereference) {
+        // Get the arguments that were originally made to the "request" method
+        var requestArgs = queue[i];
+        // Call the request method again in the context of the socket, ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.sails.io.js.io.js.toString" id="apidoc.element.sails.io.js.io.js.toString">
+        function <span class="apidocSignatureSpan">sails.io.js.</span>io.js.toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">io.js.toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.sails.io.js.toString" id="apidoc.element.sails.io.js.toString">
+        function <span class="apidocSignatureSpan">sails.io.js.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">toString = function () {
+    return text;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.sails.io.js.toString" id="apidoc.module.sails.io.js.toString">module sails.io.js.toString</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.sails.io.js.toString.toString" id="apidoc.element.sails.io.js.toString.toString">
+        function <span class="apidocSignatureSpan">sails.io.js.</span>toString
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function toString() { [native code] }</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
+</body></html>
