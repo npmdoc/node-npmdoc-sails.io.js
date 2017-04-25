@@ -1,4 +1,7 @@
-# api documentation for  [sails.io.js (v1.1.10)](https://github.com/balderdashy/sails.io.js)  [![npm package](https://img.shields.io/npm/v/npmdoc-sails.io.js.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-sails.io.js) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-sails.io.js.svg)](https://travis-ci.org/npmdoc/node-npmdoc-sails.io.js)
+# npmdoc-sails.io.js
+
+#### basic api documentation for  [sails.io.js (v1.1.10)](https://github.com/balderdashy/sails.io.js)  [![npm package](https://img.shields.io/npm/v/npmdoc-sails.io.js.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-sails.io.js) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-sails.io.js.svg)](https://travis-ci.org/npmdoc/node-npmdoc-sails.io.js)
+
 #### Javascript SDK for communicating w/ a Sails server via WebSockets/socket.io.
 
 [![NPM](https://nodei.co/npm/sails.io.js.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/sails.io.js)
@@ -92,7 +95,8 @@
         "prepublish": "./node_modules/grunt-cli/bin/grunt publish",
         "test": "node ./node_modules/mocha/bin/mocha -b --reporter spec --timeout 10000"
     },
-    "version": "1.1.10"
+    "version": "1.1.10",
+    "bin": {}
 }
 ```
 
